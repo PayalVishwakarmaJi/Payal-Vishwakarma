@@ -64,7 +64,7 @@ const AbstractShapes = () => {
       <Float speed={2} rotationIntensity={0.5} floatIntensity={1.5}>
         <mesh position={[-5, -1, -8]}>
           <sphereGeometry args={[2.5, 32, 32]} />
-          <meshStandardMaterial color="#B59E7D" transparent opacity={0.15} />
+          <meshStandardMaterial color="#B59E7D" transparent opacity={0.05} />
         </mesh>
       </Float>
     </group>

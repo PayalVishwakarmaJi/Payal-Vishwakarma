@@ -59,6 +59,8 @@ p { line-height: 1.7; }
   box-shadow: 0 8px 32px 0 rgba(88, 71, 56, 0.05), inset 0 0 0 1px rgba(255,255,255,0.4);
 }
 .canvas-container { position: fixed !important; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+/* Hide 3D canvas on mobile — prevents sphere/line bleed-through artifacts */
+@media (max-width: 767px) { .canvas-container { display: none; } }
 
 .section {
   position: relative;
@@ -162,8 +164,9 @@ p { line-height: 1.7; }
   .work-grid { flex-direction: row; gap: 2rem; align-items: flex-start; }
   .work-card-1 { margin-top: 4rem; }
 }
-.work-card { position: relative; flex: 1; min-width: 0; height: 440px; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 20px 40px -12px rgba(88, 71, 56, 0.3); background: #000; border: 1px solid rgba(255,255,255,0.1); transition: box-shadow 0.5s ease; }
-@media (min-width: 768px) { .work-card { height: 560px; border-radius: 2rem; } }
+.work-card { position: relative; flex: 1; min-width: 0; height: 440px; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 20px 40px -12px rgba(88, 71, 56, 0.3); background: #000; transition: box-shadow 0.5s ease; }
+/* Remove border on mobile to avoid thin-line artifacts */
+@media (min-width: 768px) { .work-card { border: 1px solid rgba(255,255,255,0.1); border-radius: 2rem; height: 560px; } }
 .work-card:hover { box-shadow: 0 40px 80px -12px rgba(181, 158, 125, 0.5); }
 .work-card-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; background-size: cover; background-position: center; transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); filter: brightness(0.9); }
 .work-card:hover .work-card-bg { transform: scale(1.08); filter: brightness(1.1); }
