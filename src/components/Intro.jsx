@@ -110,7 +110,7 @@ export default function Intro() {
           </motion.div>
         </motion.div>
 
-        {/* Text Side */}
+        {/* Text Side :*/}
         <motion.div 
           style={{ y: textY, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
           className="intro-text-wrapper"
