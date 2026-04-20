@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, Linkedin, ArrowRight, Send } from 'lucide-react';
+import { Mail, Phone, Link2, ArrowRight, Send } from 'lucide-react';
 
 export default function Contact() {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
@@ -25,7 +25,7 @@ export default function Contact() {
       href: "tel:+919205420573"
     },
     {
-      icon: Linkedin,
+      icon: Link2,
       label: "LinkedIn",
       value: "payal-vishwakarma",
       href: "https://www.linkedin.com/in/payal-vishwakarma-a06716262"
