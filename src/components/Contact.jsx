@@ -70,7 +70,7 @@ export default function Contact() {
         </motion.div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '4rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(280px, 1fr) minmax(280px, 2fr)', gap: '5rem', alignItems: 'start' }}>
+          <div className="contact-inner-grid">
 
             {/* Left: Contact Info Sidebar */}
             <motion.div
@@ -93,7 +93,7 @@ export default function Contact() {
                   viewport={{ once: true }}
                   style={{
                     display: 'flex', alignItems: 'center', gap: '1.25rem',
-                    padding: '1.5rem 2rem',
+                    padding: '1.25rem 1.5rem',
                     borderRadius: '1.25rem',
                     background: 'rgba(255,255,255,0.25)',
                     backdropFilter: 'blur(10px)',
@@ -106,21 +106,21 @@ export default function Contact() {
                   }}
                 >
                   <div style={{
-                    width: '3rem', height: '3rem', borderRadius: '50%',
+                    width: '2.75rem', height: '2.75rem', borderRadius: '50%',
                     background: 'rgba(181, 158, 125, 0.1)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
                   }}>
                     <item.icon size={18} color="var(--color-tobacco)" />
                   </div>
-                  <div>
+                  <div style={{ minWidth: 0 }}>
                     <p style={{ fontSize: '0.75rem', color: 'var(--color-mountain)', letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 0.25rem' }}>
                       {item.label}
                     </p>
-                    <p style={{ fontSize: '0.95rem', color: 'var(--color-mahogany)', margin: 0, fontWeight: 500, wordBreak: 'break-word' }}>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--color-mahogany)', margin: 0, fontWeight: 500, wordBreak: 'break-word', overflowWrap: 'break-word' }}>
                       {item.value}
                     </p>
                   </div>
-                  <ArrowRight size={16} color="var(--color-tobacco)" style={{ marginLeft: 'auto', opacity: 0.5 }} />
+                  <ArrowRight size={16} color="var(--color-tobacco)" style={{ marginLeft: 'auto', opacity: 0.5, flexShrink: 0 }} />
                 </motion.a>
               ))}
             </motion.div>
@@ -132,7 +132,7 @@ export default function Contact() {
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
               className="glass"
-              style={{ padding: '3rem', borderRadius: '2rem' }}
+              style={{ padding: 'clamp(1.5rem, 4vw, 3rem)', borderRadius: '2rem' }}
             >
               {submitted ? (
                 <motion.div
@@ -154,7 +154,7 @@ export default function Contact() {
                     Send a Message
                   </h3>
                   <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
+                    <div className="contact-name-email-grid">
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                         <label style={{ fontSize: '0.8rem', color: 'var(--color-mountain)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Name</label>
                         <input
@@ -194,7 +194,7 @@ export default function Contact() {
                       whileHover={{ scale: 1.03, boxShadow: '0 10px 30px rgba(88,71,56,0.2)' }}
                       whileTap={{ scale: 0.97 }}
                       className="btn-primary"
-                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', padding: '1.25rem 2.5rem', alignSelf: 'flex-end' }}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', padding: '1.25rem 2.5rem', alignSelf: 'flex-end', width: '100%' }}
                     >
                       Send Message <Send size={18} />
                     </motion.button>
