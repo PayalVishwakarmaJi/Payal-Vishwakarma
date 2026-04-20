@@ -68,8 +68,11 @@ const TiltCard = ({ project, index }) => {
       
       {/* Interactive Spotlight Filter */}
       <motion.div
-        className="work-card-spotlight pointer-events-none inset-0 absolute z-0"
         style={{
+          position: 'absolute',
+          top: 0, left: 0, right: 0, bottom: 0,
+          zIndex: 2,
+          pointerEvents: 'none',
           background: useTransform(
             [mouseX, mouseY],
             ([mx, my]) => `radial-gradient(circle at ${mx}px ${my}px, rgba(255, 255, 255, 0.15) 0%, transparent 60%)`
@@ -114,7 +117,7 @@ export default function WorkCards() {
       <div className="work-container">
         
         <div className="work-header" style={{ marginBottom: '5rem', textAlign: 'center' }}>
-            <h2 className="intro-title" style={{ fontFamily: 'var(--font-serif)', fontSize: '4rem', color: 'var(--color-mahogany)', marginBottom: '1rem' }}>Selected Works</h2>
+            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2rem, 6vw, 4rem)', color: 'var(--color-mahogany)', marginBottom: '1rem' }}>Selected Works</h2>
             <div style={{ width: '60px', height: '2px', backgroundColor: 'var(--color-tobacco)', margin: '0 auto' }}></div>
         </div>
 
