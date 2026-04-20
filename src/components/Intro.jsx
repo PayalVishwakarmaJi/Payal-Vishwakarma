@@ -106,7 +106,7 @@ export default function Intro() {
             }}
           >
             <span style={{ color: 'var(--color-vanilla)', fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Since</span>
-            <span style={{ color: 'var(--color-tobacco)', fontSize: '1.1rem', fontFamily: 'var(--font-serif)' }}>2022</span>
+            <span style={{ color: 'var(--color-tobacco)', fontSize: '1.1rem', fontFamily: 'var(--font-serif)' }}>2024</span>
           </motion.div>
         </motion.div>
 
