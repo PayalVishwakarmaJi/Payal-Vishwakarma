@@ -26,8 +26,8 @@ export default function Intro() {
     offset: ['start end', 'end start']
   });
 
-  const imgY = useTransform(scrollYProgress, [0, 1], [-30, 30]);
-  const textY = useTransform(scrollYProgress, [0, 1], [20, -20]);
+  const imgY = useTransform(scrollYProgress, [0, 1], [-10, 10]);
+  const textY = useTransform(scrollYProgress, [0, 1], [10, -10]);
   const branchRotate = useTransform(scrollYProgress, [0, 1], [0, 8]);
   const branchY = useTransform(scrollYProgress, [0, 1], [0, 40]);
 
@@ -88,6 +88,7 @@ export default function Intro() {
             src="/images/payal.png" 
             alt="Payal Vishwakarma - Interior Designer" 
             className="intro-image"
+            style={{ backgroundColor: 'var(--color-sand)' }}
           />
 
           {/* Year badge */}

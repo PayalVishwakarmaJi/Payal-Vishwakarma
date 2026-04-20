@@ -35,7 +35,7 @@ export default function Philosophy() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, amount: 0.1 }}
           className="philosophy-sketch-wrapper"
         >
           <div className="philosophy-glow" style={{ opacity: 0.6, background: 'radial-gradient(circle, var(--color-tobacco) 0%, transparent 60%)' }}></div>

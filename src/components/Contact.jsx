@@ -33,7 +33,7 @@ export default function Contact() {
   ];
 
   return (
-    <section className="section contact-section" style={{ position: 'relative', overflow: 'hidden' }}>
+    <section className="section contact-section" style={{ position: 'relative', overflowX: 'hidden' }}>
       
       {/* Radial mood glow */}
       <div className="contact-mood-bg"></div>

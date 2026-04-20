@@ -44,7 +44,7 @@ export default function Services() {
   };
 
   return (
-    <section className="section services-section" style={{ position: 'relative', overflow: 'hidden' }}>
+    <section className="section services-section" style={{ position: 'relative', overflowX: 'hidden' }}>
       
       {/* Decorative Background Blob */}
       <div 
@@ -80,7 +80,7 @@ export default function Services() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, amount: 0.1 }}
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',

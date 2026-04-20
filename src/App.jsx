@@ -45,7 +45,7 @@ function App() {
       <div className="noise-overlay"></div>
       <CanvasBackground />
 
-      <main className="relative z-10" style={{ overflow: 'hidden' }}>
+      <main className="relative z-10" style={{ overflowX: 'hidden' }}>
         {/* Global Floating Botanicals positioned relative to the entire page scroll path */}
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none', zIndex: 0, height: '700vh', overflow: 'hidden' }}>
             <BotanicalDecoration style={{ top: '150vh', left: '-50px' }} flipHorizontal scale={1.5} type={2} />

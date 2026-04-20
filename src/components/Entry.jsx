@@ -14,7 +14,7 @@ export default function Entry() {
   }, []);
 
   return (
-    <section className="section entry-section" style={{ position: 'relative', overflow: 'hidden' }}>
+    <section className="section entry-section" style={{ position: 'relative', overflowX: 'hidden' }}>
       
       {/* Radial warm glow */}
       <div style={{
