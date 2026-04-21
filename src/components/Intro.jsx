@@ -97,17 +97,10 @@ export default function Intro() {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
             viewport={{ once: true }}
-            style={{
-              position: 'absolute', bottom: '-20px', left: '-20px', zIndex: 20,
-              width: '80px', height: '80px',
-              background: 'var(--color-mahogany)',
-              borderRadius: '50%',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              boxShadow: '0 10px 30px rgba(88,71,56,0.3)'
-            }}
+            className="intro-badge"
           >
-            <span style={{ color: 'var(--color-vanilla)', fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Since</span>
-            <span style={{ color: 'var(--color-tobacco)', fontSize: '1.1rem', fontFamily: 'var(--font-serif)' }}>2024</span>
+            <span className="intro-badge-since">Since</span>
+            <span className="intro-badge-year">2024</span>
           </motion.div>
         </motion.div>
 
@@ -117,8 +110,8 @@ export default function Intro() {
           className="intro-text-wrapper"
         >
           {/* Label row */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ width: '40px', height: '1px', backgroundColor: 'var(--color-tobacco)' }}></div>
+          <div className="intro-label-row">
+            <div className="intro-label-line"></div>
             <p className="intro-role">Freelance Interior Designer</p>
           </div>
           

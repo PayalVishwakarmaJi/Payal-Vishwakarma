@@ -39,24 +39,26 @@ export default function Entry() {
       />
 
       {/* Small corner labels */}
-      <motion.p 
+      <motion.div 
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5 }}
-        style={{ position: 'absolute', top: '2rem', left: '2.5rem', fontFamily: 'var(--font-sans)', fontSize: '0.7rem', color: 'var(--color-mountain)', letterSpacing: '0.2em', textTransform: 'uppercase', zIndex: 10 }}
+        className="entry-corner-label top-left"
       >
         Portfolio 2024
-      </motion.p>
-      <motion.p
+      </motion.div>
+      <motion.div
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5 }}
-        style={{ position: 'absolute', top: '2rem', right: '2.5rem', fontFamily: 'var(--font-sans)', fontSize: '0.7rem', color: 'var(--color-mountain)', letterSpacing: '0.2em', textTransform: 'uppercase', zIndex: 10 }}
+        className="entry-corner-label top-right"
       >
         Interior Designer
-      </motion.p>
-      <motion.p
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5 }}
-        style={{ position: 'absolute', bottom: '2rem', left: '2.5rem', fontFamily: 'var(--font-sans)', fontSize: '0.7rem', color: 'var(--color-mountain)', letterSpacing: '0.2em', textTransform: 'uppercase', zIndex: 10 }}
-      >
-        Scroll to explore ↓
-      </motion.p>
+      </motion.div>
+      <div className="entry-corner-label bottom-left">
+        <motion.p
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5 }}
+          className="scroll-hint"
+        >
+          Scroll to explore ↓
+        </motion.p>
+      </div>
 
       {/* Main centered content */}
       <div style={{ position: 'relative', zIndex: 10, textAlign: 'center', padding: '0 2rem', maxWidth: '900px', margin: '0 auto' }}>
@@ -66,7 +68,7 @@ export default function Entry() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
-          style={{ fontFamily: 'var(--font-sans)', fontSize: '0.85rem', color: 'var(--color-tobacco)', letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: '2rem' }}
+          style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(0.65rem, 2.5vw, 0.85rem)', color: 'var(--color-tobacco)', letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: 'clamp(1rem, 4vw, 2rem)' }}
         >
           — Payal Vishwakarma —
         </motion.p>
@@ -78,7 +80,7 @@ export default function Entry() {
           transition={{ duration: 1.2, delay: 0.6, ease: 'easeOut' }}
           style={{
             fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(2.5rem, 6vw, 6rem)',
+            fontSize: 'clamp(2.5rem, 9vw, 6rem)',
             fontWeight: 400,
             lineHeight: 1.15,
             color: 'var(--color-mahogany)',
@@ -90,7 +92,7 @@ export default function Entry() {
         </motion.h1>
 
         {/* Animated cycling word */}
-        <div style={{ height: 'clamp(4rem, 8vw, 8rem)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', marginBottom: '3rem' }}>
+        <div style={{ height: 'clamp(3.5rem, 12vw, 8rem)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', marginBottom: 'clamp(2rem, 6vw, 3rem)' }}>
           <AnimatePresence mode="wait">
             <motion.span
               key={currentWord}
@@ -100,10 +102,11 @@ export default function Entry() {
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               style={{
                 fontFamily: 'var(--font-script)',
-                fontSize: 'clamp(3.5rem, 9vw, 9rem)',
+                fontSize: 'clamp(3.5rem, 15vw, 9rem)',
                 color: 'var(--color-tobacco)',
                 display: 'block',
-                lineHeight: 1
+                lineHeight: 1,
+                padding: '0.2rem 0'
               }}
             >
               {words[currentWord]}
