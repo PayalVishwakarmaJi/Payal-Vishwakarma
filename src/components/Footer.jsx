@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { links } from '../nav';
 import { scrollToId } from '../lenis';
+import LogoMark from './LogoMark';
 
 export default function Footer() {
   return (
@@ -24,6 +25,7 @@ export default function Footer() {
       <div className="block">
         <div className="cell cell-wide">
           <span className="mono">Studio</span>
+          <LogoMark height={64} className="lm-foot" />
           <strong>The Ambience</strong>
           <span className="mono">Interior Design Studio</span>
         </div>

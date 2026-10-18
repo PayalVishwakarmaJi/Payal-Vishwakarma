@@ -1,10 +1,11 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import { ArrowDownRight } from 'lucide-react';
 import { scrollToId } from '../lenis';
 
 const EASE = [0.22, 1, 0.36, 1];
 const lines = [['We draw rooms'], ["you'll want to"], ['live ', 'in.']];
+const pad4 = (n) => String(Math.max(0, Math.round(n))).padStart(4, '0');
 
 const draw = (go, delay, dur = 1.6) => ({
   initial: { pathLength: 0, opacity: 0 },
@@ -40,7 +41,7 @@ function Plan({ go }) {
       {/* plant */}
       <motion.circle cx="690" cy="135" r="30" strokeWidth="1.1" {...draw(go, 2.8, 1.1)} />
       <motion.path d="M690 135 V107 M690 135 L714 121 M690 135 L714 149 M690 135 V163 M690 135 L666 149 M690 135 L666 121" strokeWidth="0.8" {...draw(go, 3, 0.9)} />
-      {/* dimension line */}
+      {/* dimension lines */}
       <motion.path d="M70 52 H730 M70 40 V64 M730 40 V64" strokeWidth="1" {...draw(go, 0.5, 1.8)} />
       <motion.path d="M770 90 V470 M758 90 H782 M758 470 H782" strokeWidth="1" {...draw(go, 0.7, 1.8)} />
       {/* north arrow */}
@@ -53,68 +54,103 @@ function Plan({ go }) {
 
 export default function Hero({ go }) {
   const ref = useRef(null);
+
+  // scroll: the hero dims and recedes while the next section slides over it
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const y = useTransform(scrollYProgress, [0, 1], [0, 90]);
+  const bodyOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.2]);
+  const bodyScale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
+
+  // pointer: drafting crosshair with live coordinates + gentle plan parallax
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const show = useMotionValue(0);
+  const nx = useMotionValue(0);
+  const ny = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 600, damping: 50, mass: 0.2 });
+  const sy = useSpring(my, { stiffness: 600, damping: 50, mass: 0.2 });
+  const px = useSpring(useTransform(nx, [-0.5, 0.5], [14, -14]), { stiffness: 80, damping: 20 });
+  const py = useSpring(useTransform(ny, [-0.5, 0.5], [10, -10]), { stiffness: 80, damping: 20 });
+  const coord = useTransform([mx, my], ([x, y2]) => `X ${pad4(x)}   Y ${pad4(y2)}`);
+
+  const onMove = (e) => {
+    const r = ref.current.getBoundingClientRect();
+    mx.set(e.clientX - r.left);
+    my.set(e.clientY - r.top);
+    nx.set((e.clientX - r.left) / r.width - 0.5);
+    ny.set((e.clientY - r.top) / r.height - 0.5);
+    show.set(1);
+  };
 
   return (
-    <section id="home" ref={ref} className="hero wrap dark">
-      <div className="sheet-tag"><b>A-01</b> Index <i /> Interior Design Studio</div>
+    <section id="home" ref={ref} className="hero wrap dark" onMouseMove={onMove} onMouseLeave={() => show.set(0)}>
+      <motion.div className="xh-v" style={{ x: sx, opacity: show }} aria-hidden="true" />
+      <motion.div className="xh-h" style={{ y: sy, opacity: show }} aria-hidden="true" />
+      <motion.div className="xh-read mono" style={{ x: sx, y: sy, opacity: show }} aria-hidden="true">
+        <motion.span>{coord}</motion.span>
+      </motion.div>
 
-      <div className="hero-grid">
-        <div>
-          <h1 className="hero-title" aria-label="We draw rooms you'll want to live in.">
-            {lines.map((parts, i) => (
-              <span className="ln" key={i}>
-                <motion.span
-                  style={{ display: 'block' }}
-                  initial={{ y: '105%' }}
-                  animate={go ? { y: 0 } : { y: '105%' }}
-                  transition={{ duration: 1.1, delay: 0.15 + i * 0.12, ease: EASE }}
-                >
-                  {parts.map((p, j) => (j === 1 ? <em key={j}>{p}</em> : p))}
-                </motion.span>
-              </span>
-            ))}
-          </h1>
+      <motion.div className="hero-in" style={{ opacity: bodyOpacity, scale: bodyScale }}>
+        <div className="sheet-tag"><b>A-01</b> Index <i /> Interior Design Studio</div>
 
-          <motion.p className="hero-sub" initial={{ opacity: 0, y: 16 }} animate={go ? { opacity: 1, y: 0 } : {}} transition={{ duration: 1, delay: 0.8, ease: EASE }}>
-            The Ambience designs hotel lobbies, restaurants and cafés with emotion, craft and quiet luxury, from first plan to last chair.
-          </motion.p>
+        <div className="hero-grid">
+          <div>
+            <h1 className="hero-title" aria-label="We draw rooms you'll want to live in.">
+              {lines.map((parts, i) => (
+                <span className="ln" key={i}>
+                  <motion.span
+                    style={{ display: 'block' }}
+                    initial={{ y: '105%' }}
+                    animate={go ? { y: 0 } : { y: '105%' }}
+                    transition={{ duration: 1.1, delay: 0.15 + i * 0.12, ease: EASE }}
+                  >
+                    {parts.map((p, j) => (j === 1 ? <em key={j}>{p}</em> : p))}
+                  </motion.span>
+                </span>
+              ))}
+            </h1>
 
-          <motion.div className="hero-cta" initial={{ opacity: 0, y: 16 }} animate={go ? { opacity: 1, y: 0 } : {}} transition={{ duration: 1, delay: 1, ease: EASE }}>
-            <button type="button" className="btn btn-solid" onClick={() => scrollToId('work')}>
-              View the works <ArrowDownRight size={16} />
-            </button>
-            <button type="button" className="btn btn-line" onClick={() => scrollToId('contact')}>
-              Start a project
-            </button>
+            <motion.p className="hero-sub" initial={{ opacity: 0, y: 16 }} animate={go ? { opacity: 1, y: 0 } : {}} transition={{ duration: 1, delay: 0.8, ease: EASE }}>
+              The Ambience designs hotel lobbies, restaurants and cafés with emotion, craft and quiet luxury, from first plan to last chair.
+            </motion.p>
+
+            <motion.div className="hero-cta" initial={{ opacity: 0, y: 16 }} animate={go ? { opacity: 1, y: 0 } : {}} transition={{ duration: 1, delay: 1, ease: EASE }}>
+              <button type="button" className="btn btn-solid" onClick={() => scrollToId('work')}>
+                View the works <ArrowDownRight size={16} />
+              </button>
+              <button type="button" className="btn btn-line" onClick={() => scrollToId('contact')}>
+                Start a project
+              </button>
+            </motion.div>
+          </div>
+
+          <motion.div className="hero-draw" style={{ y }}>
+            <motion.div className="hero-draw-inner" style={{ x: px, y: py }}>
+              <svg className="badge" viewBox="0 0 120 120" aria-hidden="true">
+                <defs><path id="badgePath" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0" /></defs>
+                <text fontSize="9.4" letterSpacing="3.1" fill="currentColor">
+                  <textPath href="#badgePath">INTERIOR DESIGN STUDIO · EST. 2024 · THE AMBIENCE ·</textPath>
+                </text>
+                <circle cx="60" cy="60" r="5" fill="var(--clay-bright)" />
+              </svg>
+              <Plan go={go} />
+              <motion.span className="note" style={{ left: '8%', top: '4%' }} initial={{ opacity: 0 }} animate={{ opacity: go ? 1 : 0 }} transition={{ delay: 2.4 }}>58′-1″</motion.span>
+              <motion.span className="note" style={{ right: '0', top: '44%' }} initial={{ opacity: 0 }} animate={{ opacity: go ? 1 : 0 }} transition={{ delay: 2.6 }}>31′-2″</motion.span>
+              <motion.span className="note" style={{ left: '7%', bottom: '0' }} initial={{ opacity: 0 }} animate={{ opacity: go ? 1 : 0 }} transition={{ delay: 3.2 }}>N</motion.span>
+              <motion.span className="note" style={{ right: '6%', bottom: '0' }} initial={{ opacity: 0 }} animate={{ opacity: go ? 1 : 0 }} transition={{ delay: 3.2 }}>Scale 1:50</motion.span>
+            </motion.div>
           </motion.div>
         </div>
 
-        <motion.div className="hero-draw" style={{ y }}>
-          <svg className="badge" viewBox="0 0 120 120" aria-hidden="true">
-            <defs><path id="badgePath" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0" /></defs>
-            <text fontSize="9.4" letterSpacing="3.1" fill="currentColor">
-              <textPath href="#badgePath">INTERIOR DESIGN STUDIO · EST. 2024 · THE AMBIENCE ·</textPath>
-            </text>
-            <circle cx="60" cy="60" r="5" fill="var(--clay-bright)" />
-          </svg>
-          <Plan go={go} />
-          <motion.span className="note" style={{ left: '8%', top: '4%' }} initial={{ opacity: 0 }} animate={{ opacity: go ? 1 : 0 }} transition={{ delay: 2.4 }}>58′-1″</motion.span>
-          <motion.span className="note" style={{ right: '0', top: '44%' }} initial={{ opacity: 0 }} animate={{ opacity: go ? 1 : 0 }} transition={{ delay: 2.6 }}>31′-2″</motion.span>
-          <motion.span className="note" style={{ left: '7%', bottom: '0' }} initial={{ opacity: 0 }} animate={{ opacity: go ? 1 : 0 }} transition={{ delay: 3.2 }}>N</motion.span>
-          <motion.span className="note" style={{ right: '6%', bottom: '0' }} initial={{ opacity: 0 }} animate={{ opacity: go ? 1 : 0 }} transition={{ delay: 3.2 }}>Scale 1:50</motion.span>
-        </motion.div>
-      </div>
-
-      <div className="hero-foot mono">
-        <ul>
-          <li>Hotel lobbies</li>
-          <li>Restaurants</li>
-          <li>Cafés</li>
-        </ul>
-        <span className="dim">Scroll ↓</span>
-      </div>
+        <div className="hero-foot mono">
+          <ul>
+            <li>Hotel lobbies</li>
+            <li>Restaurants</li>
+            <li>Cafés</li>
+          </ul>
+          <span className="dim">Scroll ↓</span>
+        </div>
+      </motion.div>
     </section>
   );
 }

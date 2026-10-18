@@ -145,9 +145,8 @@ main { position: relative; z-index: 1; }
 .plate-link { margin-top: 1.6rem; display: inline-block; padding-bottom: 0.3rem; background-image: linear-gradient(var(--clay), var(--clay)); background-size: 100% 1px; background-position: 0 100%; background-repeat: no-repeat; transition: color 0.3s, background-size 0.5s var(--ease); }
 .plate-link:hover { color: var(--clay); }
 .plate-img { position: relative; display: block; width: 100%; padding: 0.7rem; background: #fbf9f4; border: 1px solid var(--ink); box-shadow: 0 30px 60px -34px rgba(18, 17, 15, 0.5); overflow: hidden; transition: transform 0.8s var(--ease), box-shadow 0.8s var(--ease); }
-.plate-img img { width: 100%; height: auto; transition: transform 1s var(--ease); }
+.plate-img img { display: block; width: 100%; height: auto; }
 .plate-img:hover { transform: translateY(-6px); box-shadow: 0 44px 70px -34px rgba(18, 17, 15, 0.55); }
-.plate-img:hover img { transform: scale(1.025); }
 .plate-curtain { position: absolute; inset: 0; background: var(--ink); transform-origin: right; z-index: 3; pointer-events: none; }
 
 .lightbox { position: fixed; inset: 0; z-index: 9200; background: rgba(18,17,15,0.94); display: flex; align-items: center; justify-content: center; padding: 3.5rem 1rem 1rem; }
@@ -342,3 +341,72 @@ main { position: relative; z-index: 1; }
 .foot-word-wrap:hover .foot-word { color: var(--paper); }
 .foot-word-wrap:hover .foot-word em { color: var(--clay-bright); }
 .foot-bar { color: rgba(241, 237, 229, 0.5); }
+
+/* ==========================================================================
+   ROUND 4: hero as a pinned stage, drafting crosshair, micro-interactions
+   ========================================================================== */
+/* hero content wrapper (keeps the original flex layout) */
+.hero-in { display: flex; flex-direction: column; justify-content: space-between; flex: 1; transform-origin: 50% 0; will-change: transform, opacity; }
+.hero-draw-inner { position: relative; width: 100%; height: 100%; }
+
+/* drafting crosshair (desktop pointer only) */
+.xh-v, .xh-h { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 3; background: rgba(241, 237, 229, 0.16); }
+.xh-v { bottom: 0; width: 1px; height: 100%; }
+.xh-h { right: 0; height: 1px; width: 100%; }
+.xh-read { position: absolute; left: 0; top: 0; z-index: 3; pointer-events: none; margin: 12px 0 0 14px; color: var(--clay-bright); font-size: 0.62rem; letter-spacing: 0.1em; white-space: pre; }
+@media (hover: none), (pointer: coarse) { .xh-v, .xh-h, .xh-read { display: none; } }
+
+.hero { position: relative; z-index: 0; }
+/* the hero stays pinned and the next sections slide over it (roomy desktop screens only) */
+@media (min-width: 900px) and (min-height: 720px) {
+  .hero { position: sticky; top: 0; z-index: 0; }
+}
+main > section:not(.hero):not(.dark):not(.clay):not(.sand) { position: relative; z-index: 1; background: var(--paper); }
+main > section.dark:not(.hero), main > section.clay, main > section.sand { position: relative; z-index: 1; }
+.cols { z-index: 5; }
+
+/* manifesto lines respond to the pointer */
+.manifesto li { transition: color 0.4s var(--ease), padding-left 0.6s var(--ease); }
+.manifesto li:hover { color: var(--clay); padding-left: 0.9rem; }
+
+/* sheet tags: rule draws in */
+.sheet-tag i { transform-origin: left; animation: ruleIn 1.4s var(--ease) both; }
+@keyframes ruleIn { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* services: arrow + title nudge */
+.svc-t { transition: transform 0.6s var(--ease); }
+.svc:hover .svc-t { transform: translateX(0.4rem); }
+
+/* buttons: keyboard focus on dark */
+.dark :focus-visible, .clay :focus-visible { outline-color: var(--paper); }
+
+@media (max-width: 899px) { .hero-draw { margin-bottom: 1.6rem; } }
+
+/* ---- The Ambience "A" logo mark ---- */
+.hdr-logo { display: inline-flex; align-items: center; gap: 0.7rem; }
+.hdr-mark { height: 34px; width: auto; display: block; }
+.pre-mark { height: clamp(84px, 17vh, 170px); width: auto; display: block; margin-bottom: clamp(0.8rem, 2.4vh, 1.8rem); }
+.pre-the { font-size: clamp(1.5rem, 3.6vw, 2.8rem); }
+.pre-name { font-size: clamp(3rem, 11.5vw, 11rem); }
+.foot-mark { height: 64px; width: auto; align-self: flex-start; margin: 0.3rem 0 0.2rem; }
+.hdr { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.hdr-mark { height: 42px; }
+
+.lm-foot { margin: 1.6rem 0 1.8rem 1.7rem; }
+.pre-mark { margin-bottom: clamp(2.4rem, 7vh, 4.2rem); }
+
+/* ---- Logo sparkle: soft shine sweep + a few twinkles (no rings) ---- */
+.lm { position: relative; display: inline-block; width: calc(var(--h) * 1.14); height: var(--h); flex-shrink: 0; }
+.lm-art { position: relative; display: block; width: 100%; height: 100%; }
+.lm-img { display: block; height: var(--h); width: auto; }
+.lm-shine { position: absolute; inset: 0; overflow: hidden; pointer-events: none; -webkit-mask: url(/images/logo-a.webp) center / contain no-repeat; mask: url(/images/logo-a.webp) center / contain no-repeat; }
+.lm-shine::before { content: ""; position: absolute; top: -25%; bottom: -25%; left: 0; width: 55%; background: linear-gradient(100deg, rgba(255, 250, 232, 0) 0%, rgba(255, 246, 214, 0.55) 35%, rgba(255, 255, 245, 1) 50%, rgba(255, 246, 214, 0.55) 65%, rgba(255, 250, 232, 0) 100%); transform: translateX(-160%) skewX(-18deg); animation: lmSweep 3.6s cubic-bezier(0.5, 0, 0.2, 1) 0.8s infinite; }
+@keyframes lmSweep { 0% { transform: translateX(-160%) skewX(-18deg); } 32%, 100% { transform: translateX(300%) skewX(-18deg); } }
+.lm-img { animation: lmGlint 3.6s ease-in-out 0.8s infinite; }
+@keyframes lmGlint { 0%, 100% { filter: brightness(1); } 16% { filter: brightness(1.28) drop-shadow(0 0 10px rgba(255, 226, 160, 0.55)); } 34% { filter: brightness(1); } }
+.lm-spark { position: absolute; width: calc(var(--h) * 0.17); height: calc(var(--h) * 0.17); min-width: 6px; min-height: 6px; background: #F6DDAB; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); opacity: 0; pointer-events: none; animation: lmTwinkle 3.6s ease-in-out infinite; filter: drop-shadow(0 0 4px rgba(246, 221, 171, 0.9)); }
+.lm-spark.s1 { top: 4%; right: -6%; }
+.lm-spark.s2 { top: 52%; left: -9%; width: calc(var(--h) * 0.11); height: calc(var(--h) * 0.11); min-width: 4px; min-height: 4px; animation-delay: 1.3s; }
+.lm-spark.s3 { bottom: 6%; right: -12%; width: calc(var(--h) * 0.13); height: calc(var(--h) * 0.13); min-width: 5px; min-height: 5px; animation-delay: 2.3s; }
+@keyframes lmTwinkle { 0%, 100% { opacity: 0; transform: scale(0.2) rotate(0deg); } 45% { opacity: 1; transform: scale(1) rotate(45deg); } 70% { opacity: 0; transform: scale(0.4) rotate(90deg); } }
+.lm-foot { margin: 0.5rem 0 0.9rem 0.6rem; }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { lenisRef, scrollToId } from '../lenis';
 import { links } from '../nav';
+import LogoMark from './LogoMark';
 
 
 export default function Header() {
@@ -45,7 +46,8 @@ export default function Header() {
       <motion.div className="hdr-progress" style={{ scaleX: prog }} />
       <header className={`hdr${onDark ? ' hdr-dark' : ''}${open ? ' hdr-open' : ''}`}>
         <button type="button" className="hdr-logo" onClick={() => go('home')} aria-label="The Ambience, back to top">
-          The Ambience<sup>®</sup>
+          <LogoMark height={40} className="lm-hdr" sparks={2} />
+          <span>The Ambience<sup>®</sup></span>
         </button>
         <span className="hdr-mid">Interior Design Studio — Est. 2024</span>
         <button type="button" className={`hdr-btn${open ? ' open' : ''}`} onClick={() => setOpen((o) => !o)} aria-expanded={open}>

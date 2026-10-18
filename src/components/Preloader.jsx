@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import LogoMark from './LogoMark';
 
 const EASE = [0.22, 1, 0.36, 1];
 const the = 'The'.split('');
@@ -43,6 +44,14 @@ export default function Preloader({ onDone }) {
           </div>
 
           <div className="pre-center" aria-label="The Ambience">
+            <motion.div
+              className="pre-mark"
+              initial={{ opacity: 0, y: 24, scale: 0.92 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 1.2, delay: 0.1, ease: EASE }}
+            >
+              <LogoMark height="clamp(84px, 17vh, 170px)" />
+            </motion.div>
             <div className="pre-the">{the.map((c, i) => letter(c, i, 0.2))}</div>
             <div className="pre-name">{name.map((c, i) => letter(c, i, 0.45))}</div>
             <motion.div
