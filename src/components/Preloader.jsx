@@ -50,7 +50,7 @@ export default function Preloader({ onDone }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 1.2, delay: 0.1, ease: EASE }}
             >
-              <LogoMark height="clamp(84px, 17vh, 170px)" />
+              <LogoMark height="clamp(96px, 20vh, 190px)" large />
             </motion.div>
             <div className="pre-the">{the.map((c, i) => letter(c, i, 0.2))}</div>
             <div className="pre-name">{name.map((c, i) => letter(c, i, 0.45))}</div>

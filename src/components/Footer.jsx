@@ -25,7 +25,7 @@ export default function Footer() {
       <div className="block">
         <div className="cell cell-wide">
           <span className="mono">Studio</span>
-          <LogoMark height={64} className="lm-foot" />
+          <LogoMark height={72} className="lm-foot" large />
           <strong>The Ambience</strong>
           <span className="mono">Interior Design Studio</span>
         </div>
